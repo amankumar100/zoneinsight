@@ -22,7 +22,7 @@ def load_pdf(file_path):
 
     # DICT - Hold structured data for 1 page
         page_data = {
-            "page num": i + 1,
+            "page_num": i + 1,
             "text": text,
             "char_count": len(text),
             "word_count": len(text.split())
@@ -45,7 +45,7 @@ def chunk_text(text, chunk_size=500, overlap=50):
         end = start + chunk_size
         chunk = text[start:end]
         chunks.append(chunk)
-        start += end - overlap  # Move by overlap
+        start = end - overlap  # Move by overlap
     return chunks
 
 if __name__=="__main__":
