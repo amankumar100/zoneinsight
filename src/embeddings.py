@@ -30,8 +30,6 @@ def chunk_text(text, chunk_size=500, overlap=50):
         start = end - overlap  # Move by overlap
     return chunks
 
-# Day 2
-
 def cosine_similarity(vec1, vec2):
     """ How similar are two vectors? 1 =  same, 0 = different """
     norm1 = np.linalg.norm(vec1)
