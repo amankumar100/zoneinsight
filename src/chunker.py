@@ -1,72 +1,46 @@
-from pypdf import PdfReader
-import os
-
-def load_pdf(file_path):
+def chunk_text(pages, chunk_size=800, overlap=100):
     """
-    Load a PDF file and returna a list of dicts.
-    Each dict = 1 page.
+    pages = list of dicts from load_pdf()
+    Each dict has: page_num, text
+    Returns: list of chunk dicts
     """
-    print(f"Loading PDF file: {file_path}")
-    reader = PdfReader(file_path)
+    all_chunks = []
 
-    pages = []
-    print(f"Number of pages: {len(reader.pages)}")
+    for page in pages:
+        text = page['text']
 
-    for i, page in enumerate(reader.pages):
-        text = page.extract_text()
-
-
-    # Skip empty pages
-        if not text:
+        # Skip any remaining garbage that passed loader
+        if not text or len(text.strip()) < 100:
             continue
 
-    # DICT - Hold structured data for 1 page
-        page_data = {
-            "page_num": i + 1,
-            "text": text,
-            "char_count": len(text),
-            "word_count": len(text.split())
-        }
+        # Extra safety - remove legal footer if still present
+        if "The Law will never be perfect" in text:
+            text = text.split("The Law will never")[0]
 
-    # ADD DICT to list
-        pages.append(page_data)
+        if len(text.strip()) < 100:
+            continue
 
-    return pages
+        start = 0
+        while start < len(text):
+            end = start + chunk_size
+            chunk = text[start:end]
 
-def chunk_text(text, chunk_size=500, overlap=50):
-    """
-    Splits text into smaller chunks with overlap
-    This is REAL chunking used in RAG
-    """
+            # Keep only meaningful chunks
+            if len(chunk.strip()) > 200:
+                all_chunks.append({
+                    'text': chunk.strip(),
+                    'page_num': page['page_num'],
+                    'chunk_id': len(all_chunks)
+                })
 
-    chunks = []
-    start = 0
-    while start<len(text):
-        end = start + chunk_size
-        chunk = text[start:end]
-        chunks.append(chunk)
-        start = end - overlap  # Move by overlap
-    return chunks
+            start += chunk_size - overlap
 
-if __name__=="__main__":
-    pdf_path = "data/attention.pdf"
+    return all_chunks
 
-    if not os.path.exists(pdf_path):
-        print(f"ERROR: PDF path not found")
-        print("Download attention paper to data/attention.pdf")
-        exit(1)
-
-    # PART 1 : Load pdf as list of dicts
-    all_pages = load_pdf(pdf_path)
-
-    print(f"Loaded {len(all_pages)} pages from PDF sucessfully")
-    print(f"Page 1 text: {all_pages[0]['char_count']} chars, {all_pages[0]['word_count']} words")
-    print("First 300 chars of page 1---")
-    print(all_pages[0]['text'][:300])
-
-    # PART 2 : Chunk text from page 1
-    print("\n---- Chunking Demo: Page 1 -> 500-char chunks ---")
-    page1_chunks = chunk_text(all_pages[0]['text'], chunk_size=500, overlap=50)
-    print(f"Page 1 text chunked into {len(page1_chunks)} chunks")
-    print(f"Chunk 1 (first 200 chars): {page1_chunks[0][:200]}")
-    print(f"Chunk 2 (first 200 chars): {page1_chunks[1][:200]}")
+# For testing alone
+if __name__ == "__main__":
+    from pdf_loader import load_pdf
+    pages = load_pdf("data/attention.pdf")
+    chunks = chunk_text(pages)
+    print(f"Total chunks: {len(chunks)}")
+    print(f"First chunk Page {chunks[0]['page_num']}: {chunks[0]['text'][:200]}")
