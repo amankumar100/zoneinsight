@@ -8,7 +8,7 @@
 [![Accuracy](https://img.shields.io/badge/Retrieval-100%25-brightgreen)]()
 
 ## 📌 Overview
-ZoneInsight loads the "Attention Is All You Need" paper, chunks it, stores embeddings in ChromaDB, retrieves relevant chunks, and generates answers using Ollama Llama3.2:1b.
+ZoneInsight loads the "Attention Is All You Need" paper, chunks it, stores embeddings in ChromaDB, retrieves relevant chunks, and generates answers using Ollama Llama3.2:1b. You can use any pdf.
 
 ## 🏗️ Architecture
 
