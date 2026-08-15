@@ -59,6 +59,8 @@ python src/rag.py
 Q: What is attention mechanism?
 A: The attention mechanism allows every position in the decoder to attend over all positions in the input sequence [Page 3, 5]. In self-attention, all keys, values and queries come from same place...
 
+```
+
 ## Project Structure
 
 zoneinsight/
