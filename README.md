@@ -12,7 +12,7 @@ ZoneInsight loads the "Attention Is All You Need" paper, chunks it, stores embed
 
 ## 🏗️ Architecture
 
-PDF (Attention Paper) 
+PDF (Attention Paper) ("You can upload pdf of your choice")
 → pdf_loader.py 
 → chunker.py [1000 chars / 200 overlap] 
 → vectordb.py [all-MiniLM-L6-v2, 384 dim] 
@@ -64,14 +64,15 @@ zoneinsight/
 ├── evaluation.md
 └── README.md
 
-## 🛠️ Tech Stack
+## Tech Stack
 
     Embedding: all-MiniLM-L6-v2 (384 dim)
     VectorDB: ChromaDB Persistent
     LLM: Ollama Llama3.2:1b
     Chunking: 1000 chars / 200 overlap
 
-## Aman(Me) - ZoneInsight RAG
+## Author
+Aman Kumar (Me) - ZoneInsight RAG
 
 ## 📜 License 
 MIT

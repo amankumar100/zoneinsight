@@ -1,4 +1,4 @@
-# Day 6 Evaluation Report
+# Evaluation Report
 
 **Model:** all-MiniLM-L6-v2 (384 dim)
 **DB:** 57 chunks, 800/100 -> 1000/200 improved
@@ -19,8 +19,7 @@
 | 9 | Purpose of masking? | Page 3 | ✅ |
 | 10 | WMT datasets? | Page 7,9 | ✅ |
 
-**Technique:** Keyword-enriched queries (Q K V, N=6, WMT) improved 90% → 100%
-
+## Example :
 
 Q: What is attention mechanism?
 A: The attention mechanism allows every position in the decoder to attend over all positions in the input sequence [Page 3, 5]. In self-attention, all keys, values and queries come from same place...
