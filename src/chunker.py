@@ -1,4 +1,4 @@
-def chunk_text(pages, chunk_size=800, overlap=100):
+def chunk_text(pages, chunk_size=1000, overlap=200):
     """
     pages = list of dicts from load_pdf()
     Each dict has: page_num, text
